@@ -32,11 +32,7 @@ module Pronto
       paths = { cookbook_paths: [], role_paths: [] }
       patches.each do |patch|
         path = patch.new_file_full_path.to_s
-        if path.include?('cookbook')
-          paths[:cookbook_paths] << path
-        elsif path.include?('role')
-          paths[:role_paths] << path
-        end
+        paths[:cookbook_paths] << path
       end
       paths
     end
