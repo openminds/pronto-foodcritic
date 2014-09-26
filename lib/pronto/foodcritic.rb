@@ -20,7 +20,7 @@ module Pronto
       paths = chef_paths(patches)
       return [] if paths[:cookbook_paths].none? && paths[:role_paths].none?
 
-      @linter.check(paths).warnings.flat_map do |warning|
+      @linter.check({ tags: %w(~FC001) }.merge(paths)).warnings.flat_map do |warning|
         patches.select { |patch| patch.new_file_full_path.to_s == warning.match[:filename] }
                .flat_map(&:added_lines)
                .select { |line| line.new_lineno == warning.match[:line] }
