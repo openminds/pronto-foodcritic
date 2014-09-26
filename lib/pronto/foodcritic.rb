@@ -7,7 +7,7 @@ module Pronto
       return [] if paths[:cookbook_paths].none? && paths[:role_paths].none?
 
       @linter = ::FoodCritic::Linter.new
-      @linter.check(paths).warnings.flat_map do |warning|
+      @linter.check({ tags: %w(~FC001) }.merge(paths)).warnings.flat_map do |warning|
         ruby_patches.select { |patch| patch.new_file_full_path.to_s == warning.match[:filename] }
           .flat_map(&:added_lines)
           .select { |line| line.new_lineno == warning.match[:line] }
